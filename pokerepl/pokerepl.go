@@ -52,6 +52,9 @@ func StartRepl(){
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 		text := scanner.Text()
+		if text == ""{
+			continue
+		}
 		command, ok:= commands[text]
 		if !ok{
 			fmt.Println("invalid command")
