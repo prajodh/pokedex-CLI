@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 	"log"
-	// "github.com/prajodh/pokedex-Cli-golang/pokecache"
+	"github.com/prajodh/pokedex-Cli-golang/pokecache"
 )
 
 
@@ -44,7 +44,7 @@ func loadCommands() map[string]Commands{
 
 
 func StartRepl(){
-	// pokecache.Pokecache()
+	pokecache.Pokecache()
 	
 	commands:=loadCommands()
 	for {

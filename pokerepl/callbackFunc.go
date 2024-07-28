@@ -1,14 +1,18 @@
 package pokerepl
 
 import (
-	"errors"
+	// "errors"
 	"fmt"
 	"os"
 	"github.com/prajodh/pokedex-Cli-golang/pokeapi"
 )
 
-var page int = 0
-var pagination *int = &page
+type NextPrev struct{
+	nextUrl string
+	prevUrl string
+}
+
+var state NextPrev
 
 func functionExit() error{
 	os.Exit(0)
@@ -29,36 +33,34 @@ func functionHelp() error {
 }
 
 
-func functionmap() error {
-	for i:=1; i < 21; i++{
-	res, err := pokeapi.GetLocations(*pagination+i)
+func functionmap() error { 
+	default_url := "https://pokeapi.co/api/v2/location/" 
+	if state.nextUrl != ""{
+		default_url = state.nextUrl
+	}
+	nextUrl, prevUrl, err := pokeapi.Map(default_url)
 	if err != nil{
-		fmt.Println(err)
 		return err
-
 	}
-	fmt.Println(res)
-	}
-	*pagination = (*pagination + 20) % 1036
+	state.nextUrl = nextUrl
+	state.prevUrl = prevUrl
 	return nil
 }
 
-func functionmapb() error{
-	*pagination -= 40
-	if *pagination < 0{
-		*pagination = 0
-		pagErr := errors.New("your all the way back to the start")
-		fmt.Println(pagErr)
+
+func functionmapb() error { 
+	default_url := "https://pokeapi.co/api/v2/location/" 
+	if state.prevUrl != ""{
+		default_url = state.prevUrl
+	}else{
+		fmt.Println("you are already at the start")
 	}
-	for i:=1; i < 21; i++{
-	res, err := pokeapi.GetLocations(*pagination+i)
+	nextUrl, prevUrl, err := pokeapi.Map(default_url)
 	if err != nil{
-		fmt.Println("errors")
 		return err
 	}
-	fmt.Println(res)
-	}
-	*pagination = (*pagination + 20) % 1036
+	state.nextUrl = nextUrl
+	state.prevUrl = prevUrl
 	return nil
 }
 
