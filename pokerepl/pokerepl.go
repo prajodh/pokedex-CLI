@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"log"
 	// "github.com/prajodh/pokedex-Cli-golang/pokecache"
 )
 
@@ -11,7 +12,7 @@ import (
 type Commands struct{
 	name string
 	description string
-	function func()
+	function func() error
 }
 
 func loadCommands() map[string]Commands{
@@ -56,6 +57,9 @@ func StartRepl(){
 			fmt.Println("invalid command")
 			continue
 		}
-		command.function()
+		err := command.function()
+		if err!= nil{
+			log.Fatal(err)
+		}
 	}
 }
