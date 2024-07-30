@@ -15,12 +15,12 @@ type NextPrev struct{
 
 var state NextPrev
 
-func functionExit() error{
+func functionExit(args ...string) error{
 	os.Exit(0)
 	return nil
 }
 
-func functionHelp() error {
+func functionHelp(args ...string) error {
 	c := loadCommands()
 	res := c["help"].description
 	for _,val:= range c{
@@ -34,8 +34,8 @@ func functionHelp() error {
 }
 
 
-func functionmap() error { 
-	default_url := "https://pokeapi.co/api/v2/location/" 
+func functionmap(args ...string) error { 
+	default_url := "https://pokeapi.co/api/v2/location-area/" 
 	if state.nextUrl != ""{
 		default_url = state.nextUrl
 	}
@@ -49,8 +49,8 @@ func functionmap() error {
 }
 
 
-func functionmapb() error { 
-	default_url := "https://pokeapi.co/api/v2/location/" 
+func functionmapb(args ...string) error { 
+	default_url := "https://pokeapi.co/api/v2/location-area/" 
 	if state.prevUrl != ""{
 		default_url = state.prevUrl
 	}else{
@@ -63,6 +63,18 @@ func functionmapb() error {
 	state.nextUrl = nextUrl
 	state.prevUrl = prevUrl
 	return nil
+}
+
+
+func functionEXplore(args ...string) error {	
+	default_url := "https://pokeapi.co/api/v2/location-area/"
+	default_url+=args[0]
+	err := pokeapi.Explore(default_url)
+	if err != nil{
+		return err
+	}
+	return nil
+
 }
 
 

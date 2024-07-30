@@ -3,15 +3,18 @@ package pokerepl
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"log"
+	"os"
+	"strings"
 )
+
+
 
 
 type Commands struct{
 	name string
 	description string
-	function func() error
+	function func(...string) error
 }
 
 func loadCommands() map[string]Commands{
@@ -33,6 +36,11 @@ func loadCommands() map[string]Commands{
 		description: "move back to prev 20 locations",
 		function: functionmapb,
 	}
+	commands["explore"] = Commands{
+		name:"mapb",
+		description: "explore pokemon in a given location",
+		function: functionEXplore,
+	}
 	commands["help"] = Commands{
 		name : "help",
 		description :  "Welcome to the Pokedex!\n\nUsage:\nhelp: Displays a help message \n\n",
@@ -53,12 +61,22 @@ func StartRepl(){
 		if text == ""{
 			continue
 		}
-		command, ok:= commands[text]
+		var arguments []string
+		args := strings.Split(text, " ")
+		if len(args) > 1{
+			for i := range(len(args)){
+				if i == 0{
+					continue
+				}
+				arguments = append(arguments, args[1])
+			}
+		}
+		command, ok:= commands[args[0]]
 		if !ok{
 			fmt.Println("invalid command")
 			continue
 		}
-		err := command.function()
+		err := command.function(arguments...)
 		if err!= nil{
 			log.Fatal(err)
 		}
