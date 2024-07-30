@@ -6,11 +6,13 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
+
 	"github.com/prajodh/pokedex-Cli-golang/pokecache"
 )
 
 
-var cache = pokecache.CreateCache()
+var cache = pokecache.CreateCache(time.Minute* 10) // interval after which we clear the cache
 
 type LocationAreas struct {
 	Count    int    

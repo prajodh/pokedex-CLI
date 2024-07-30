@@ -15,8 +15,9 @@ type Cache struct{
 	// time time.Duration
 }
 
-func CreateCache() Cache{
+func CreateCache(interval time.Duration) Cache{
 	Cache_ := Cache{make(map[string]cacheEntry)}
+	go Cache_.reaploop(interval)
 	return Cache_
 }
 
@@ -30,6 +31,22 @@ func (c * Cache) Get(key string) ([]byte, error){
 		return val.val, nil
 	}
 	return val.val, errors.New("empty entry")
+}
+
+func (c * Cache) reaploop(interval time.Duration){
+	timeChannel := time.NewTicker(interval)
+	for range timeChannel.C{
+		reap(c, interval)
+	}
+}
+
+func reap(c *Cache, interval time.Duration){
+	time_ := time.Now().UTC().Add(-interval)
+	for k, v := range c.cache{
+		if v.createdAt.Before(time_){
+			delete(c.cache,  k)
+		}
+	}
 }
 
 // func pokecache(){
