@@ -7,6 +7,7 @@ import (
 	"github.com/prajodh/pokedex-Cli-golang/pokeapi"
 )
 
+
 type NextPrev struct{
 	nextUrl string
 	prevUrl string

@@ -4,12 +4,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-
-	// "fmt"
 	"io"
 	"net/http"
-	// "strconv"
+	"github.com/prajodh/pokedex-Cli-golang/pokecache"
 )
+
+
+var cache = pokecache.CreateCache()
+
 type LocationAreas struct {
 	Count    int    
 	Next     string 
@@ -22,16 +24,21 @@ type LocationAreas struct {
 
 
 func Map(url string)  (string, string, error){
-	res ,err := http.Get(url)
-	if err != nil{
-		return "", "", errors.New("error wil fetching the location")
-	}
-	body, err := io.ReadAll(res.Body)
-	if err != nil{
-		return "", "", errors.New("error will reading bytes")
+	var data []byte
+	data, err := cache.Get(url)
+	if err != nil {
+		res ,err := http.Get(url)
+		if err != nil{
+			return "", "", errors.New("error wil fetching the location")
+		}
+		data, err = io.ReadAll(res.Body)
+		if err != nil{
+			return "", "", errors.New("error will reading bytes")
+		}
+		cache.Add(url, data)
 	}
 	loc := &LocationAreas{}
-	err_ := json.Unmarshal(body, loc)
+	err_ := json.Unmarshal(data, loc)
 	if err_ != nil{
 		return "", "", errors.New("error while unmarshalling")
 	}

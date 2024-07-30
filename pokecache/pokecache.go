@@ -1,7 +1,6 @@
 package pokecache
 
 import (
-	"fmt"
 	"time"
 	"errors"
 )
@@ -16,29 +15,29 @@ type Cache struct{
 	// time time.Duration
 }
 
-func createCache() Cache{
-	cache := Cache{make(map[string]cacheEntry)}
-	return cache
+func CreateCache() Cache{
+	Cache_ := Cache{make(map[string]cacheEntry)}
+	return Cache_
 }
 
-func (c *Cache) add(key string, val []byte){
+func (c *Cache) Add(key string, val []byte){
 	c.cache[key] = cacheEntry{createdAt: time.Time{}, val : val}
 }
 
-func (c * Cache) get(key string) (cacheEntry, error){
+func (c * Cache) Get(key string) ([]byte, error){
 	val, ok := c.cache[key]
 	if ok {
-		return val, nil
+		return val.val, nil
 	}
-	return val, errors.New("empty entry")
+	return val.val, errors.New("empty entry")
 }
 
-func Pokecache(){
-	cache := createCache()
-	var a []byte
-	cache.add("hello", a)
-	fmt.Println(cache)
-	_, err :=cache.get("b")
-	fmt.Println(err)
+// func pokecache(){
+// 	cache := createCache()
+// 	var a []byte
+// 	cache.add("hello", a)
+// 	fmt.Println(cache)
+// 	_, err :=cache.get("b")
+// 	fmt.Println(err)
 
-}
+// }
