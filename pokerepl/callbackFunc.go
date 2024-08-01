@@ -95,6 +95,17 @@ func functionCatch(args ...string) error{
 	return nil
 }
 
+func functionPokedex(args ...string) error{
+	fmt.Println("Pokemon in you pokedex are")
+	if len(pokedexCaught) < 1{
+		fmt.Println("You have caught any pokemon yet please start to catch pokemon")
+	}
+	for _,v := range pokedexCaught{
+		fmt.Println("-", v.Name)
+	}
+	return nil
+}
+
 
 func functionInspect(args ...string) error {
 	name := args[0]
