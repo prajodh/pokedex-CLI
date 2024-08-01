@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"os"
 	"github.com/prajodh/pokedex-Cli-golang/pokeapi"
+	"math/rand"
 )
 
-
+var pokedexCaught = make(map[string]pokeapi.Pokemon)
 type NextPrev struct{
 	nextUrl string
 	prevUrl string
@@ -78,6 +79,38 @@ func functionEXplore(args ...string) error {
 }
 
 
+func functionCatch(args ...string) error{
+	default_url := "https://pokeapi.co/api/v2/pokemon/"
+	default_url += args[0]
+	pokemon, err := pokeapi.Catch(default_url)
+	if err != nil {
+		return err
+	}
+	if catchPokemon(args[0], pokemon.BaseExperience){
+		_,ok := pokedexCaught[args[0]]
+		if !ok{
+			pokedexCaught[args[0]] = pokemon
+		}
+	}
+	return nil
+}
+
+
+func catchPokemon(name string, basehealth int) bool {
+	fmt.Println("throwing a ball at "+ name+"...")
+	for {
+		minhp := 55
+		maxhp := 420
+		chance := rand.Intn(maxhp - minhp + 1) + minhp
+		if chance > basehealth{
+			fmt.Println(name+" was caught")
+			return true
+		} else {
+			fmt.Println(name+" fled the scene")
+			return false
+		}
+	}
+}
 
 
 
