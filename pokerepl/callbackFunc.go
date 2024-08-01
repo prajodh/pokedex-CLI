@@ -96,6 +96,30 @@ func functionCatch(args ...string) error{
 }
 
 
+func functionInspect(args ...string) error {
+	name := args[0]
+	if val, ok := pokedexCaught[name]; !ok{
+		fmt.Println("you havent caught "+name+" yet...")
+	} else{
+		parseAndPrintPokemon(val)
+	}
+	return nil
+}
+
+
+func parseAndPrintPokemon(pokemon pokeapi.Pokemon){
+	// var key = []string{"Name", "Height", "Weight", "Stats", "Type"}
+	
+	fmt.Printf("Name : %v \n height: %v\n weight: %v\nStats\n",pokemon.Name,pokemon.Height,pokemon.Weight)
+	for _, v := range pokemon.Stats{
+		fmt.Println("-"+v.Stat.Name +" ",v.BaseStat)
+	}
+	fmt.Println("Type")
+	for _, v := range pokemon.Types{
+		fmt.Println("-"+v.Type.Name)
+	}
+}
+
 func catchPokemon(name string, basehealth int) bool {
 	fmt.Println("throwing a ball at "+ name+"...")
 	for {

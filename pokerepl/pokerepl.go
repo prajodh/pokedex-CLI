@@ -46,6 +46,11 @@ func loadCommands() map[string]Commands{
 		description: "try and catch the pokemon",
 		function: functionCatch,
 	}
+	commands["inspect"] = Commands{
+		name:"inspect",
+		description: "inspect pokemon you have caught",
+		function: functionInspect,
+	}
 	commands["help"] = Commands{
 		name : "help",
 		description :  "Welcome to the Pokedex!\n\nUsage:\nhelp: Displays a help message \n\n",
