@@ -6,10 +6,10 @@ A command-line Pokedex application built in Go. This application allows you to e
 
 - **REPL Environment**: Interact with the Pokedex using simple commands.
 - **Explore the Pokémon World**: Use the `map` and `mapb` commands to navigate through Pokémon locations.
-- **Caching**: Fast access to previously visited locations through a caching mechanism.
 - **Catch Pokémon**: Attempt to catch Pokémon in specific locations and add them to your Pokedex.
 - **Inspect Pokémon**: View detailed information about Pokémon you've caught.
 - **Pokedex Overview**: See a list of all Pokémon you've caught.
+- **Caching**: caching mechanism to prevent the number of network bandwidth used.
 
 ## Commands
 
@@ -40,24 +40,20 @@ Displays a list of all the Pokémon you've caught.
 ## Installation
 
 1. **Clone the repository:**
-
    ```bash
    git clone https://github.com/prajodh/pokedex-CLI.git
    cd pokedex-cli
    ```
    
 2. **Build the application:**
-
-   
-  ```bash
-  go build -o pokedexcli
-  ```
+   ```bash
+   go build -o pokedexcli
+   ```
 3. **Run application**
 
-
-  ```bash
-  go build -o pokedexcli
-  ```
+   ```bash
+   ./pokedexcli
+   ```
 
 
 
