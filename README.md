@@ -44,17 +44,20 @@ Displays a list of all the Pokémon you've caught.
    ```bash
    git clone https://github.com/prajodh/pokedex-CLI.git
    cd pokedex-cli
+   ```
+   
 2. **Build the application:**
 
    
   ```bash
   go build -o pokedexcli
-
+  ```
 3. **Run application**
 
 
   ```bash
   go build -o pokedexcli
+  ```
 
 
 
