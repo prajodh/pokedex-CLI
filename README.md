@@ -47,12 +47,12 @@ Displays a list of all the Pokémon you've caught.
    
 2. **Build the application:**
    ```bash
-   go build -o pokedexcli
+   go build .
    ```
 3. **Run application**
 
    ```bash
-   ./pokedexcli
+   ./pokedex-CLI-golang
    ```
 
 
